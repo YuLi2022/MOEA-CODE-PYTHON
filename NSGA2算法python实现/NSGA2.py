@@ -29,7 +29,9 @@ def NSGA2(nIter, nChr, nPop, pc, pm, etaC, etaM, func, lb, rb):
     # 开始第1次迭代 
     iter = 1 
     while iter <= nIter:
-        print(f"当前正在第{iter}代....")
+        # 进度条 
+        print("【进度】【{0:20s}】【正在进行{1}代...】【共{2}代】".\
+            format('▋'*int(iter/nIter*20), iter, nIter), end='\r')
         ranks = nonDominationSort(pops, fits)  # 非支配排序 
         distances = crowdingDistanceSort(pops, fits, ranks)  # 拥挤度
         pops, fits = select1(nPop, pops, fits, ranks, distances) 

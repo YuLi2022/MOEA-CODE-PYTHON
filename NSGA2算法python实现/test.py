@@ -8,7 +8,7 @@ from function import *
 from fitness import * 
 
 def main(): 
-    nIter = 10   
+    nIter = 50    
     nChr = 3 
     nPop = 100 
     pc = 0.6  
@@ -27,10 +27,12 @@ def main():
     X = np.concatenate((x,x,x), axis=1) 
     thFits = fitness(X, function) 
 
+    plt.rcParams['font.sans-serif'] = 'KaiTi'  # 设置显示中文 
     fig = plt.figure(dpi=400) 
     ax = fig.add_subplot(111) 
-    ax.plot(thFits[:,0], thFits[:,1], color='green') 
-    ax.scatter(paretoFits[:,0], paretoFits[:,1], color='red') 
+    ax.plot(thFits[:,0], thFits[:,1], color='green', label='理论帕累托前沿') 
+    ax.scatter(paretoFits[:,0], paretoFits[:,1], color='red', label='实际解集') 
+    ax.legend() 
     fig.savefig('test.png', dpi=400) 
 
     print(paretoPops) 

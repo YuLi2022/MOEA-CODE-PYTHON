@@ -12,3 +12,6 @@
 
 > 参考博客：[多目标优化算法（一）NSGA-Ⅱ（NSGA2)](https://blog.csdn.net/qq_40434430/article/details/82876572)
 
+## 3. MOPSO-多目标粒子群算法
+
+> 参考文献：[MOPSO算法及其在水库优化调度中的应用](https://kns.cnki.net/kcms/detail/detail.aspx?dbcode=CJFD&dbname=CJFD2007&filename=JSJC200718086&v=dGa1CTuXauWtahkDR3gOl6bdGGX8ycO6eRIycbCzkXYy2t91HEzutO66IGH%25mmd2BGf08)

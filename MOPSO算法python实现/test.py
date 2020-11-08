@@ -15,18 +15,19 @@ from fitness import *
 def test():
 
     nIter = 100   
-    nPop = 100           
-    nAr = 100      
+    nPop = 100               
+    nAr = 100        
     nChr = 3 
     func = function 
     c1 = 1.49445
-    c2 = 1.49445
+    c2 = 2
     lb = -2 
     rb = 2 
     Vmax = 0.2 
     Vmin = -0.2 
+    M = 50   
     paretoPops, paretoFits = MOPSO(nIter, nPop, nAr, nChr, \
-        func, c1, c2, lb, rb, Vmax, Vmin) 
+        func, c1, c2, lb, rb, Vmax, Vmin, M) 
     
     print(paretoPops.shape) 
     print('='*20) 

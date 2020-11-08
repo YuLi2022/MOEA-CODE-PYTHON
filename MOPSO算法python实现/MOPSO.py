@@ -14,7 +14,7 @@ from updateArchive import getNonDominationPops, updateArchive
 from fitness import fitness
 import numpy as np 
 
-def MOPSO(nIter, nPop, nAr, nChr, func, c1, c2, lb, rb, Vmax, Vmin):
+def MOPSO(nIter, nPop, nAr, nChr, func, c1, c2, lb, rb, Vmax, Vmin, M):
     """多目标粒子群算法
     Params:
         nIter: 迭代次数 
@@ -27,28 +27,29 @@ def MOPSO(nIter, nPop, nAr, nChr, func, c1, c2, lb, rb, Vmax, Vmin):
         rb：解上界 
         Vmax: 速度最大值 
         Vmin：速度最小值 
+        M: 划分的栅格的个数为M*M个
     Return:
         paretoPops: 帕累托解集
         paretoPops：对应的适应度 
     """
     # 种群初始化 
     pops, VPops = initPops(nPop, nChr, lb, rb, Vmax, Vmin) 
-
     # 获取个体极值和种群极值 
     fits = fitness(pops, func) 
     pBest = pops 
     pFits = fits 
+    gBest = pops
     # 初始化archive集, 选取pops的帕累托面即可
     archive, arFits = getNonDominationPops(pops, fits) 
-    # archive, arFits = pops, fits 
-    gBest = pops 
     wStart = 0.9 
     wEnd = 0.4  
+
     # 开始主循环 
     iter = 1 
     while iter <= nIter:
         print("【进度】【{0:20s}】【正在进行{1}代...】【共{2}代】".\
-            format('▋'*int(iter/nIter*20), iter, nIter), end='\r')
+            format('▋'*int(iter/nIter*20), iter, nIter), end='\r') 
+
         # 速度更新 
         w = wStart - (wStart-wEnd) * (iter/nIter)**2 
         VPops = w*VPops + c1*np.random.rand()*(pBest-pops) + \
@@ -66,11 +67,10 @@ def MOPSO(nIter, nPop, nAr, nChr, func, c1, c2, lb, rb, Vmax, Vmin):
         # 更新archive集 
         archive, arFits = updateArchive(pops, fits, archive, arFits) 
         # 检查是否超出规模，如果是，那么剔除掉一些个体 
-        archive, arFits = checkArchive(archive, arFits, nAr, M=15)  
-        gBest = getGBest(pops, fits, archive, arFits, M=15)  # 重新获取全局最优解
+        archive, arFits = checkArchive(archive, arFits, nAr, M)  
+        gBest = getGBest(pops, fits, archive, arFits, M)  # 重新获取全局最优解
         iter += 1 
     print('\n')
-    # paretoPops, paretoFits = getNonDominationPops(pops, fits)
     paretoPops, paretoFits = getNonDominationPops(archive, arFits) 
     return paretoPops, paretoFits 
 
